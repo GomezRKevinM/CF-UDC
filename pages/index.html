@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API UDC |Ing Soft</title>
+
+        <script type="module">
+            const tablaAllCf = document.querySelector('#cf')
+            const contenido = tablaAllCf.querySelector('tbody')
+    
+            fetch('/classfriends')
+            .then(response=>{
+                if (!response.ok) {
+                    throw new Error(`Error en la solicitud: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data=>{
+                data.forEach(compañero => {
+                    const fila = document.createElement('tr')
+
+                    fila.innerHTML = `
+                    <td>${compañero.nombre}</td>
+                    <td>${compañero.email}</td>
+                    <td>${compañero.number.replace("+57","")}</td>
+                    <td><a href="./friend/${compañero.id}"><i class="bi bi-eye-fill"></i></a></td>
+                `;
+                    
+                    contenido.appendChild(fila)
+                });
+            })
+            .catch(error=>{
+                console.error("Error al obtener los datos, error: ",error)
+            })
+        </script>
+        <style >
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            header{
+                width: 100vw;
+                height: fit-content;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                box-shadow: 0 0 3px #344b51;
+            }
+            nav{
+                padding: 10px 25px;
+            }
+            nav a{
+                text-decoration: none;
+                color: #344b51;
+                padding: 5px;
+                border-radius: 4px;
+                background-color: transparent;
+                transition: all 0.3s ease;
+                justify-content: end;
+            }
+            nav a:hover{
+                background-color: #344b51;
+                color: white;
+            }
+
+            main{
+                place-self: center;
+                padding: 30px;
+                display: grid;
+                gap: 50px;
+            }
+            h2{
+                text-align: center;
+                color: #344b51;
+            }
+            table{
+                background-color: aliceblue;
+                border-collapse: collapse;
+                width: 100%;
+                margin-top: 25px;
+                margin-bottom: 25px;
+                user-select: none;
+                padding: 2px 5px;
+                box-shadow: 0 0 10px #344b51;
+            }
+
+            table th, table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            table td:last-child{
+                text-align: center;
+                font-size: 1.5rem;
+            }
+            table td:last-child i{
+                color: #344b51;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .table-th{
+                background-color: #000;
+                color: #fff;
+                text-align: center;
+            }
+            table tbody tr:nth-child(odd) {
+                background-color: #d7fcff;
+                transition: all 0.3s ease;
+
+            }
+
+            table tbody tr:nth-child(even) {
+                background-color: #c3d8da; /* Color de fondo para filas pares */
+                transition: all 0.3s ease;
+
+            }
+
+            table tbody tr:hover {
+                background-color: yellow; /* Color de fondo al pasar el mouse */
+                color: #000;
+                scale: 1.05;
+            }
+            #userText{
+                background-color: yellow;
+                display: flex;
+                flex-direction: column;
+                padding: 10px 25px;
+            }
+            #user-name{
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: #344b51;
+            }
+            #username{
+                font-weight:bolder;
+            }
+            #search{
+                display: flex;
+                align-items: center;
+                padding: 10px 25px;
+                border: 2px solid #344b51;
+                border-radius: 999px;
+                color: #344b51;
+                width: fit-content;
+                transition: width 1s ease;
+                interpolate-size: allow-keywords;
+            }
+            
+            #search:hover{
+                width: 100%;
+            }
+            #search:hover input[type="search"]{
+                display: block;
+            }
+            #search i{
+                font-size: 1.5rem;
+                color: #344b51;
+                margin-left: 10px;
+            }
+            #search input[type="search"]{
+                width: 100%;
+                font-size: 1.3rem;
+                font-weight: 400;
+                color: #344b51;
+                background-color: transparent;
+                border: none;
+                display: none;
+                transition: display 0.3s ease;
+                interpolate-size: allow-keywords;
+            }
+            #search input{
+                padding: 5px 10px;
+                border: none;
+                border-radius: 3px;
+            }
+            #search input::placeholder{
+                color: #344b51;
+                font-size: 1.3rem;
+                font-weight: 400;
+            }
+            #search input:focus{
+                outline: none;
+            }
+            #noExist{
+                display: none;
+                text-align: center;
+                font-size: 1.5rem;
+                color: #344b51;
+            }
+            #noExist strong{
+                color: #ffff9e;
+            }
+            #logout{
+                font-size: 1.5rem;
+                color: #344b51;
+                padding:2px 5px;
+                border-radius: 100%;
+                text-align: center;
+                margin-right: 25px;
+                border: none;
+                display: inline-flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.3s ease;
+            }
+            #logout:hover{
+                font-weight: bold;
+                scale: 1.2;
+                cursor: pointer;
+                background-color: #344b51;
+                color: white;
+            }
+        </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+    <header>
+        <p id="userText">
+            <span id="user-name"></span>
+            <span id="username"></span>
+        </p>
+
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="./register">Registrar</a>
+            <button title="Cerrar sesión" id="logout" onclick="localStorage.clear(); window.location.href='/'">
+                <i class="bi bi-power"></i>
+            </button>
+            <button id="login-btn" title="Iniciar sesión" onclick="window.location.href='/register'">
+                <i class="bi bi-box-arrow-in-right"></i>
+            </button>
+        </nav>
+    </header>
+    <main>
+        <div id="search">
+            <i class="bi bi-search"></i>
+            <input type="search" name="search" id="search" placeholder="Buscar...">
+        </div>
+        <section>
+            <h2>Compañeros de la universidad</h2>
+            <table id="cf">
+                <thead>
+                    <th class="table-th">NOMBRE</th>
+                    <th class="table-th">CORREO INSTITUCIONAL</th>
+                    <th class="table-th">CELULAR</th>
+                    <th class="table-th">ACCION</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3 id="noExist"></h3>
+        </section>
+    </main>
+    <script>
+        const userText = document.querySelector('#userText');
+        if(localStorage!==undefined &&localStorage.getItem('name') && localStorage.getItem('username')){
+            document.querySelector('#user-name').textContent=localStorage.getItem('name')
+            document.querySelector('#username').textContent='@'+localStorage.getItem('username')
+        }
+
+        const search_Section = document.querySelector('#search')
+        const search_input = search_Section.querySelector('input[type="search"]')
+
+        search_Section.addEventListener('input',()=>{
+            if(search_input.value!=""){
+            search_Section.style.width="100%"
+            search_input.style.display="block"
+            }else{
+                search_Section.style.width="fit-content"
+                search_input.style.display="none"
+                document.querySelector('#noExist').style.display="none"
+            }
+            search_input.focus()
+        })
+        search_Section.addEventListener('mouseover',()=>{
+            search_Section.style.width="100%"
+            search_input.style.display="block"
+        })
+        search_Section.addEventListener('mouseout',()=>{
+            if(search_input.value==""){
+                search_Section.style.width="fit-content"
+                search_input.style.display="none"
+            }
+        })
+        search_input.addEventListener('input',()=>{
+            const busqueda = search_input.value.toLowerCase()
+            const exist = buscar(busqueda)
+            if(!exist){
+                const noExist = document.querySelector('#noExist')
+                noExist.innerHTML=`No se encontraron resultados para: <strong>${busqueda}</strong> 🔍`
+                noExist.style.display="block"
+            }else{
+                const noExist = document.querySelector('#noExist')
+                if(noExist){
+                    const noExist = document.querySelector('#noExist')
+                    noExist.innerHTML=`No se encontraron resultados para: `
+                    noExist.style.display="none"
+                }
+            }
+        })
+
+        function buscar(busqueda){
+            const tabla = document.querySelector('#cf')
+            const filas = tabla.querySelectorAll('tbody tr')
+            filas.forEach(fila => {
+                const celdas = fila.querySelectorAll('td')
+                const nombre = celdas[0].textContent.toLowerCase()
+
+                if(!nombre.includes(busqueda)){
+                    fila.style.display="none"
+                }else{
+                    fila.style.display="table-row"
+                    return true
+                }
+            })
+        }
+
+        
+    </script>
+</body>
+</html>
