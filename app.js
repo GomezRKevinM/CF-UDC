@@ -34,6 +34,10 @@ app.get("/register",(req,res)=>{
     res.sendFile(process.cwd()+"/pages/register.html")
 })
 
+app.get("/loginUser",(req,res)=>{
+    res.sendFile(process.cwd()+"/pages/login.html")
+})
+
 app.get("/friend/:id", (req,res)=>{
     res.sendFile(process.cwd()+'/pages/friend.html');
 })
@@ -131,6 +135,8 @@ app.post("/login",async (req,res)=>{
             return res.status(400).json({message:"Contraseña incorrecta",ok:false})
         }
         res.json({message:"usuario ha iniciado sesion", data: user, ok:true})
+    }else{
+        return res.status(400).json({message:"Usuario no encontrado, por favor registrese sí aún no tiene una cuenta",ok:false})
     }
 })
 

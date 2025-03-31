@@ -222,8 +222,8 @@
 <body>
     <header>
         <p id="userText">
-            <span id="user-name"></span>
-            <span id="username"></span>
+            <span id="user-name">Iniciar sesión</span>
+            <span id="username">@guest</span>
         </p>
 
         <nav>
@@ -232,7 +232,7 @@
             <button title="Cerrar sesión" id="logout" onclick="localStorage.clear(); window.location.href='/'">
                 <i class="bi bi-power"></i>
             </button>
-            <button id="login-btn" title="Iniciar sesión" onclick="window.location.href='/register'">
+            <button id="login-btn" title="Iniciar sesión" onclick="window.location.href='./loginUser'">
                 <i class="bi bi-box-arrow-in-right"></i>
             </button>
         </nav>
