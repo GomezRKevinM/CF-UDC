@@ -268,7 +268,7 @@
     <script>
         const userText = document.querySelector('#userText');
         if(localStorage!==undefined &&localStorage.getItem('name') && localStorage.getItem('username')){
-            document.querySelector('#user-name').innerHTML=`<a class="user-name-link" title="Ir al perfil" href="/profile">${localStorage.getItem('name')}</a>`
+            document.querySelector('#user-name').innerHTML=`<a class="user-name-link" title="Ir al perfil" href="./pages/profile">${localStorage.getItem('name')}</a>`
             document.querySelector('#username').textContent='@'+localStorage.getItem('username')
         }
 
