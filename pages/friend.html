@@ -139,8 +139,8 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const url = window.location.pathname;
-        const id = url.split('/').pop()
+        const url = window.URLSearchParams(window.location.search);
+        const id = url.get('id');
         const btnCopy = document.querySelectorAll('.bi-copy');
         btnCopy.forEach(icon => {
             icon.addEventListener('click', copyToClipboard);
