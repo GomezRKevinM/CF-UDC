@@ -23,8 +23,8 @@ await turso.execute(`CREATE TABLE IF NOT EXISTS compañeros(
 
 const port = process.env.PORT || 8080;
 
-app.use(cors());
 const app = express()
+app.use(cors());
 app.use(express.json());
 
 const server = createServer(app)
