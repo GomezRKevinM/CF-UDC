@@ -9,7 +9,7 @@
             const tablaAllCf = document.querySelector('#cf')
             const contenido = tablaAllCf.querySelector('tbody')
     
-            fetch('/classfriends')
+            fetch('https://app-3b8e40df-de09-4d4e-a795-9d05e9806eef.cleverapps.io/classfriends')
             .then(response=>{
                 if (!response.ok) {
                     throw new Error(`Error en la solicitud: ${response.status}`);
