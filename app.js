@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import { createServer } from "http";
 import { Consultas } from "./classes/Consultas.js";
 import { ok } from "assert";
-const cors = require('cors');
+
 
 
 dotenv.config()
@@ -24,7 +24,12 @@ await turso.execute(`CREATE TABLE IF NOT EXISTS compañeros(
 const port = process.env.PORT || 8080;
 
 const app = express()
-app.use(cors());
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
 app.use(express.json());
 
 const server = createServer(app)
