@@ -152,7 +152,7 @@
         const inputNumber = document.getElementById('number');
 
        
-        fetch(`/classfriend/${id}`)
+        fetch(`https://app-3b8e40df-de09-4d4e-a795-9d05e9806eef.cleverapps.io/classfriend/${id}`)
         .then(response => response.json())
         .then(data => {
             const compañero = data.data[0]
