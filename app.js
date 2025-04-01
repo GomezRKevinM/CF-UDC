@@ -35,7 +35,7 @@ app.use(express.json());
 const server = createServer(app)
 
 app.get("/",(req,res)=>{
-    res.sendFile(process.cwd()+'/index.html')
+    res.redirect('https://cf-udc.netlify.app/')
 })
 
 app.get("/register",(req,res)=>{
@@ -187,5 +187,5 @@ app.post("/profile/info", async (req,res)=>{
     })
 
 app.listen(port, ()=>{
-    console.log(`Server corriendo en el puerto http://localhost:${port}`)
+    console.log(`Server corriendo en el puerto https://cf-udc.netlify.app/`)
 })

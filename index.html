@@ -24,7 +24,7 @@
                     <td>${compañero.nombre}</td>
                     <td>${compañero.email}</td>
                     <td>${compañero.number.replace("+57","")}</td>
-                    <td><a href="./friend/${compañero.id}" title="Ver compañero"><i class="bi bi-eye-fill"></i></a></td>
+                    <td><a href="./pages/friend/${compañero.id}" title="Ver compañero"><i class="bi bi-eye-fill"></i></a></td>
                 `;
                     
                     contenido.appendChild(fila)
@@ -231,13 +231,13 @@
     <header>
         <p id="userText">
             
-            <span id="user-name"><a href="/loginUser">Iniciar sesión &nbsp; <i class="bi bi-box-arrow-in-right"></i></a></span>
+            <span id="user-name"><a href="./pages/login.html">Iniciar sesión &nbsp; <i class="bi bi-box-arrow-in-right"></i></a></span>
             <span id="username">@guest</span>
         </p>
 
         <nav>
             <a href="#">Inicio</a>
-            <a href="./register">Registrar</a>
+            <a href="./pages/register.html">Registrar</a>
             <button title="Cerrar sesión" id="logout" onclick="localStorage.clear(); window.location.href='/'">
                 <i class="bi bi-power"></i>
             </button>
