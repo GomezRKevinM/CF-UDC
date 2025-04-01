@@ -186,6 +186,20 @@ app.post("/profile/info", async (req,res)=>{
         })
     })
 
+app.post("/update-user", async (req,res)=>{
+    const usuario = req.body
+    const request = await turso.execute({
+        sql: `UPDATE usuario SET nombre = :nombre, username = :username, password = :password, number = :number, emailU = :emailU, emailP = :emailP WHERE id = :id`,
+        args:{id:usuario.id, nombre:usuario.nombre, username: usuario.username, password:usuario.password, emailU:usuario.emailU, emailP:usuario.emailP, number:usuario.number}
+    })
+    if(request.rowsAffected>0){
+        console.log("Usuario actualizado:", usuario);
+        return res.json({ message: "Usuario actualizado exitosamente", data: usuario });
+    }else{
+        return res.json({message:"Error al actualizar el usuario", status: request.status})
+    }
+})
+
 app.listen(port, ()=>{
     console.log(`Server corriendo en el puerto https://cf-udc.netlify.app/`)
 })
