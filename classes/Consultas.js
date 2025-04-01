@@ -8,7 +8,7 @@ export class Consultas{
                 return `SELECT ${campo} FROM ${tabla} WHERE id = ${id}`
             break
             case "Condicion":
-                return `SELECT * FROM ${tabla} WHERE ${campo} = ${id}`
+                return `SELECT * FROM ${tabla} WHERE ${campo} = '${id}'`
         }
     }
 
@@ -20,5 +20,9 @@ export class Consultas{
     static Update(tabla,campos,id){
         const datos = {campos}
         return `UPDATE ${tabla} SET ${campos} WHERE id = ${id}`
+    }
+
+    static Delete(tabla,id){
+        return `DELETE FROM ${tabla} WHERE id = ${id}`
     }
 }

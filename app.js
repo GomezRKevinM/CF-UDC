@@ -19,7 +19,7 @@ await turso.execute(`CREATE TABLE IF NOT EXISTS compañeros(
         number TEXT
     )`)
 
-const port = 8080
+const port = process.env.PORT || 8080;
 
 const app = express()
 app.use(express.json());
@@ -27,7 +27,7 @@ app.use(express.json());
 const server = createServer(app)
 
 app.get("/",(req,res)=>{
-    res.sendFile(process.cwd()+'/pages/index.html')
+    res.sendFile(process.cwd()+'/index.html')
 })
 
 app.get("/register",(req,res)=>{
@@ -59,7 +59,10 @@ app.post("/new-user", async (req,res)=>{
         id TEXT,
         nombre TEXT,
         username TEXT,
-        password TEXT
+        password TEXT,
+        number TEXT,
+        emailU TEXT,
+        emailP TEXT
     )`)
     const usuario = req.body
     const exist = await turso.execute(Consultas.Select("Normal","compañeros","*",0))
@@ -69,9 +72,29 @@ app.post("/new-user", async (req,res)=>{
         }
     })
 
+    const compañeroExist = await turso.execute({
+        sql: `SELECT * FROM compañeros WHERE nombre = :nombre OR email = :email OR number = :number`,
+        args:{nombre:usuario.nombre, email: usuario.emailU, number:usuario.number}
+    })
+    
+    if(compañeroExist.rows.length>0){
+        console.log("Compañero encontrado:", compañeroExist.rows[0]," actualizando...");
+        const compañero = compañeroExist.rows[0]
+        const update = await turso.execute({
+            sql: `UPDATE compañeros SET nombre = :nombre, email = :email, number = :number, clave = :clave, emailP = :emailP WHERE id = :id`,
+            args:{id:compañero.id, nombre:usuario.nombre, email:usuario.emailU, number:usuario.number, clave:usuario.password, emailP:usuario.emailP}
+        })
+        .then((result) => {
+            console.log("Compañero actualizado:", result);
+        })
+        .catch((error) => {
+            console.error("Error al actualizar el compañero:", error);
+        });
+    }
+
     const request = await turso.execute({
-        sql:'INSERT INTO usuario (id,nombre,username,password) VALUES (:id, :nombre, :username, :password)',
-        args:{id:usuario.id, nombre:usuario.nombre, username: usuario.username, password:usuario.password}
+        sql:'INSERT INTO usuario (id,nombre,username,password,number,emailU,emailP) VALUES (:id, :nombre, :username, :password, :number, :emailU, :emailP)',
+        args:{id:usuario.id, nombre:usuario.nombre, username: usuario.username, password:usuario.password, emailU:usuario.emailU, emailP:usuario.emailP, number:usuario.number}
     })
 
     if(request.rowsAffected>0){
@@ -139,6 +162,21 @@ app.post("/login",async (req,res)=>{
         return res.status(400).json({message:"Usuario no encontrado, por favor registrese sí aún no tiene una cuenta",ok:false})
     }
 })
+
+app.get("/profile", async (req,res)=>{
+    res.sendFile(process.cwd()+'/pages/profile.html')
+})
+app.post("/profile/info", async (req,res)=>{
+        const id = req.body.id
+        const request = await turso.execute(Consultas.Select("Condicion","usuario","id",id))
+        .then((result) => {
+            if(result.rows.length>0){
+                res.json({message:"Informacion obtenida", data: result.rows})
+            }else{
+                res.json({message:"No se encontro el usuario"})
+            }
+        })
+    })
 
 app.listen(port, ()=>{
     console.log(`Server corriendo en el puerto http://localhost:${port}`)

@@ -80,6 +80,20 @@
         input[type="submit"], input[type="reset"]:hover{
             background-color: #2b3c44;
         }
+        #userText{
+            background-color: yellow;
+            display: flex;
+            flex-direction: column;
+            padding: 10px 25px;
+        }
+        #user-name{
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #344b51;
+        }
+        #username{
+            font-weight:bolder;
+        }
 </style>
 <body>
     <header>
@@ -89,7 +103,7 @@
         </p>
 
         <nav>
-            <a href="#">Inicio</a>
+            <a href="/">Inicio</a>
             <a href="./register">Registrar</a>
             <button title="Cerrar sesión" id="logout" onclick="localStorage.clear(); window.location.href='/'">
                 <i class="bi bi-power"></i>
@@ -103,7 +117,7 @@
         <div>
             <h2>Iniciar sesión</h2>
             <form method="post" id="login">
-                <input type="text" name="username" id="username" placeholder="Usuario" required>
+                <input type="text" name="username" id="usernameSession" placeholder="Usuario" required>
                 <input type="password" name="password" id="password" placeholder="Contraseña" required>
                 <input type="submit" value="Iniciar sesión">
             </form>
@@ -111,64 +125,39 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const loginForm = document.getElementById('login')
-        loginForm.addEventListener('submit', async (event)=>{
+        const form = document.querySelector("#login");
+        form.addEventListener("submit", async (event) => {
             event.preventDefault();
+            const username = document.querySelector("#usernameSession").value;
+            const password = document.querySelector("#password").value;
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-           const data = {username,password}
-
-                const response = await fetch('/login',{
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        window.localStorage.setItem('username', username)
-                        window.localStorage.setItem('password', password)
-                        console.log(data)
-                        window.localStorage.setItem('name', data.data.nombre)
-                        window.localStorage.setItem('id', data.data.id)
-                        
-
-                        swal.fire({
-                            icon: 'success',
-                            title: 'Inicio de sesión exitoso',
-                            text: data.message || 'Bienvenido ' + user.nombre,
-                            background: '#344b51',
-                            color: '#fff',
-                            width: 'auto',
-                            showConfirmButton: false,
-                        })
-
-                        loginForm.reset(); 
-                        setTimeout(() => {
-                            window.location.reload()
-                        },2000)
-
-                    } else {
-                        swal.fire({
-                            icon: 'error',
-                            title: 'Inicio de sesión fallido',
-                            text: data.message || 'Error al iniciar sesión',
-                            background: '#344b51',
-                            color: '#fff',
-                            width: 'auto',
-                            showConfirmButton: false,
-                            timer: 2000,
-                        })
-                    }
-                })
-                .catch(err => {
-                    console.error('Error al enviar los datos:', err);
-                    alert('Error al enviar los datos. Intenta nuevamente.');
-                });
+            const data = {username,password};
+            console.log(data);
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.ok) {
+                    window.localStorage.setItem("username", username);
+                    window.localStorage.setItem("password", password);
+                    window.localStorage.setItem("name", data.data.nombre);
+                    window.localStorage.setItem("id", data.data.id);
+                    window.localStorage.setItem("session", true);
+                    window.location.href = "/";
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: data.message,
+                        confirmButtonText: "Aceptar",
+                    });
+                }
+            })
         })
     </script>
 </body>

@@ -24,7 +24,7 @@
                     <td>${compañero.nombre}</td>
                     <td>${compañero.email}</td>
                     <td>${compañero.number.replace("+57","")}</td>
-                    <td><a href="./friend/${compañero.id}"><i class="bi bi-eye-fill"></i></a></td>
+                    <td><a href="./friend/${compañero.id}" title="Ver compañero"><i class="bi bi-eye-fill"></i></a></td>
                 `;
                     
                     contenido.appendChild(fila)
@@ -138,6 +138,14 @@
             #username{
                 font-weight:bolder;
             }
+            .user-name-link{
+                text-decoration: none;
+                color: #344b51;
+            }
+            .user-name-link:hover{
+                text-decoration: underline;
+                color: #344b51;
+            }
             #search{
                 display: flex;
                 align-items: center;
@@ -222,7 +230,8 @@
 <body>
     <header>
         <p id="userText">
-            <span id="user-name">Iniciar sesión</span>
+            
+            <span id="user-name"><a href="/loginUser">Iniciar sesión &nbsp; <i class="bi bi-box-arrow-in-right"></i></a></span>
             <span id="username">@guest</span>
         </p>
 
@@ -259,7 +268,7 @@
     <script>
         const userText = document.querySelector('#userText');
         if(localStorage!==undefined &&localStorage.getItem('name') && localStorage.getItem('username')){
-            document.querySelector('#user-name').textContent=localStorage.getItem('name')
+            document.querySelector('#user-name').innerHTML=`<a class="user-name-link" title="Ir al perfil" href="/profile">${localStorage.getItem('name')}</a>`
             document.querySelector('#username').textContent='@'+localStorage.getItem('username')
         }
 
