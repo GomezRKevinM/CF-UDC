@@ -214,14 +214,10 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
-                transition: all 0.3s ease;
+                cursor: pointer;
             }
             #logout:hover{
-                font-weight: bold;
-                scale: 1.2;
-                cursor: pointer;
-                background-color: #344b51;
-                color: white;
+                color: #1d5e6d;
             }
         </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -240,9 +236,6 @@
             <a href="./pages/register.html">Registrar</a>
             <button title="Cerrar sesión" id="logout" onclick="localStorage.clear(); window.location.href='/'">
                 <i class="bi bi-power"></i>
-            </button>
-            <button id="login-btn" title="Iniciar sesión" onclick="window.location.href='./loginUser'">
-                <i class="bi bi-box-arrow-in-right"></i>
             </button>
         </nav>
     </header>
@@ -270,6 +263,11 @@
         if(localStorage!==undefined &&localStorage.getItem('name') && localStorage.getItem('username')){
             document.querySelector('#user-name').innerHTML=`<a class="user-name-link" title="Ir al perfil" href="./pages/profile">${localStorage.getItem('name')}</a>`
             document.querySelector('#username').textContent='@'+localStorage.getItem('username')
+            const logout = document.querySelector('#logout')
+            logout.style.display="inline-block"
+        }else{
+            const logout = document.querySelector('#logout')
+            logout.style.display="none"
         }
 
         const search_Section = document.querySelector('#search')
