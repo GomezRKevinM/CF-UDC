@@ -154,11 +154,11 @@
 
         <div id="create-container">
             <h2>Crear cuenta</h2>
-            <form action="/netlify/functions/newUser" method="post" id="registerUser">
+            <form action="/.netlify/functions/new-user" method="post" id="registerUser">
                 <input type="text" name="id" id="cc" placeholder="Cedula o numero de identificación" required>
                 <input type="text" name="nombre" id="name" placeholder="Nombre completo" required>
-                <input type="text" name="email" id="email" pattern="[a-zA-Z0-9_.+-]@unicartagena\.edu\.co" placeholder="Correo institucional" required>
-                <input type="tel" name="number" id="number" pattern="[0-9]{10}" placeholder="Celular">
+                <input type="text" name="email" id="emailU" pattern="[a-zA-Z0-9_.+-]@unicartagena\.edu\.co" placeholder="Correo institucional" required>
+                <input type="tel" name="number" id="numero" pattern="[0-9]{10}" placeholder="Celular">
                 <input type="text" name="emailP" id="emailP" placeholder="Correo personal">
                 <input type="text" name="username" id="username" placeholder="Usuario" required>
                 <input type="password" name="password" id="password" placeholder="Contraseña" required>
