@@ -64,6 +64,8 @@ app.get("/classfriends",async (req,res)=>{
 })
 
 app.post("/new-user", async (req,res)=>{
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     await turso.execute(`
         CREATE TABLE IF NOT EXISTS usuario(
         id TEXT,
