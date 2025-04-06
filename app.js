@@ -26,7 +26,8 @@ const port = process.env.PORT || 8080;
 const app = express()
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*, http://localhost:3000, https://cf-udc.netlify.app/');
+    res.header("Access-Control-Allow-Origin", "[https://cf-udc.netlify.app/]").setHeader('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
