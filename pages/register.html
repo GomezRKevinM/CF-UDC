@@ -128,8 +128,8 @@
 <body>
     <header>
         <p id="userText">
-            <span id="user-name"></span>
-            <span id="username"></span>
+            <span id="user-name"><a href="./pages/login.html">Iniciar sesión &nbsp; <i class="bi bi-box-arrow-in-right"></i></a></span>
+            <span id="username">@guest</span>
         </p>
         <nav>
             <a href="../index.html">Inicio</a>
@@ -154,9 +154,12 @@
 
         <div id="create-container">
             <h2>Crear cuenta</h2>
-            <form method="post" id="registerUser">
+            <form action="/netlify/functions/newUser" method="post" id="registerUser">
                 <input type="text" name="id" id="cc" placeholder="Cedula o numero de identificación" required>
                 <input type="text" name="nombre" id="name" placeholder="Nombre completo" required>
+                <input type="text" name="email" id="email" pattern="[a-zA-Z0-9_.+-]@unicartagena\.edu\.co" placeholder="Correo institucional" required>
+                <input type="tel" name="number" id="number" pattern="[0-9]{10}" placeholder="Celular">
+                <input type="text" name="emailP" id="emailP" placeholder="Correo personal">
                 <input type="text" name="username" id="username" placeholder="Usuario" required>
                 <input type="password" name="password" id="password" placeholder="Contraseña" required>
                 <input type="submit" value="Crear cuenta">
@@ -178,9 +181,9 @@
         const form = document.getElementById('registerForm')
         const loginContainer = document.getElementById('login-container')
         const loginForm = document.getElementById('login')
-        const formNewUser = document.getElementById('registerUser')
+        // const formNewUser = document.getElementById('registerUser')
         
-        formNewUser.addEventListener('submit', async (event)=>{
+        // formNewUser.addEventListener('submit', async (event)=>{
             event.preventDefault();
 
             const id = formNewUser.querySelector('#cc').value;
