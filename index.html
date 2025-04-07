@@ -297,17 +297,18 @@
         search_input.addEventListener('input',()=>{
             const busqueda = search_input.value.toLowerCase()
             const exist = buscar(busqueda)
-            if(!exist){
-                const noExist = document.querySelector('#noExist')
-                noExist.innerHTML=`No se encontraron resultados para: <strong>${busqueda}</strong> 🔍`
-                noExist.style.display="block"
-            }else{
+            if(exist){
                 const noExist = document.querySelector('#noExist')
                 if(noExist){
                     const noExist = document.querySelector('#noExist')
                     noExist.innerHTML=`No se encontraron resultados para: `
                     noExist.style.display="none"
                 }
+            }else{
+                const noExist = document.querySelector('#noExist')
+                noExist.innerHTML=`No se encontraron resultados para: <strong>${busqueda}</strong> 🔍`
+                noExist.style.display="block"
+                
             }
         })
 
